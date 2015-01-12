@@ -3,9 +3,18 @@
 # Date: 9-1-2015
 
 # Downloading data
-# done manually
+places <- download.file("http://www.mapcruzin.com/download-shapefile/netherlands-places-shape.zip", "data/netherlands-places-shape.zip", 'internal', quiet = FALSE, mode = "w",
+              cacheOK = TRUE,
+              extra = getOption("download.file.extra"))
+railways <- download.file("http://www.mapcruzin.com/download-shapefile/netherlands-railways-shape.zip", "data/netherlands-railways-shape.zip", 'internal', quiet = FALSE, mode = "w",
+                          cacheOK = TRUE,
+                          extra = getOption("download.file.extra"))
+
+# Done manually
+# Unzip data
 getwd()
-# load sp package
+
+# Load sp package
 library(sp)
 library(rgdal)
 library(rgeos)
@@ -55,6 +64,8 @@ places_RD@data[intersect_place]
 # Plot buffer zone and Utrecht
 plot(Buffer_IRW, col="gray80")
 plot(Intersect, add=TRUE)
+
+spplot(Buffer_IRW,main='Industrial railway buffer zone around Utrecht',zcol = "type",col.regions=c("gray60", "gray40"),sp.layout=list(list("sp.points", Intersect, col= "red", pch=19, cex=1.5)))
 
 # City: Utrecht. Population: 100,000 inhabitants
 box()
